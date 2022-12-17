@@ -13,8 +13,8 @@ library(shiny)
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
         
-        h1("Hello Shiny!")
-        hr()
+        h1("Hello Shiny!"),
+        hr(),
         h2("h2 format")
         
 )
