@@ -14,6 +14,8 @@ library(shiny)
 ui <- fluidPage(
         
         h1("Hello Shiny!")
+        hr()
+        h2("h2 format")
         
 )
         
