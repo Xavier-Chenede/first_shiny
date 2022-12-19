@@ -39,5 +39,8 @@ server <- function(input, output) {
         # Run the application 
 shinyApp(ui = ui, server = server)
 
-Y
+
+library(rsconnect)
+rsconnect::deployApp(getwd())
+
 
