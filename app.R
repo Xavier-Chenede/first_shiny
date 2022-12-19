@@ -15,34 +15,32 @@ ui <- fluidPage(
         
         h1("Hello Shiny!"),
         hr(),
-        h2("h2 format"),
+        h2("Number of clic:"),
+        h3(textOutput ("result")),
         hr(),
-        
         actionButton(inputId="but1",
-                     label="Add +1"),
+                     label="clic!")
         
-        textOutput('result')
 )
         
+x <- 0
 
 server <- function(input, output) {
         
-        x <- 0
         clic <- eventReactive(input$but1, {
-                x <- x+1
-        }, ignoreNULL = FALSE)  
+                x <<- x+1
+                })
         
-        
-        
-        observe({
-                if(input$but1 > 0){
-                        output$result=clic
-                        }
+        output$result <- renderText({
+                clic()
         })
-        
-
-}
+}       
 
         # Run the application 
 shinyApp(ui = ui, server = server)
+
+
+library(rsconnect)
+rsconnect::deployApp(getwd())
+
 
