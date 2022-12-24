@@ -11,34 +11,41 @@ library(shiny)
 library(plot.matrix)
 
 # Define UI for app that draws a histogram ----
-ui <- fluidPage(
+ui <- fluidPage(tabsetPanel(
         
-        h1("Hello Shiny!"),
-        hr(),
-        h2("Number of clicks:"),
-        h3(textOutput ("result")),
-        hr(),
-        actionButton(inputId="but1",
-                     label="click!"),
-        actionButton(inputId="but2",
-                     label="reset!"),
-        hr(),
-        numericInput(inputId="lim",
-                     label="Limite before auto-reset",
-                     value=10),
-        hr(),
-        h2("Load RDS files and trace"),
-        hr(),
-        fileInput( inputId = "File_ch",
-                   label='Choose model file',
-                   multiple = FALSE,
-                   accept = NULL,
-                   width = NULL,
-                   buttonLabel = "Browse...",
-                   placeholder = "No file selected",
-                   capture = NULL),
-        tableOutput("contents"),
-        plotOutput("matrx")
+     tabPanel("Test",
+              h1("Hello Shiny!"),
+              hr(),
+              h2("Number of clicks:"),
+              h3(textOutput ("result")),
+              hr(),
+              actionButton(inputId="but1",
+                           label="click!"),
+              actionButton(inputId="but2",
+                           label="reset!"),
+              hr(),
+              numericInput(inputId="lim",
+                           label="Limite before auto-reset",
+                           value=10),
+              hr(),
+              h2("Load RDS files and trace"),
+              hr(),
+              fileInput( inputId = "File_ch",
+                         label='Choose model file',
+                         multiple = FALSE,
+                         accept = NULL,
+                         width = NULL,
+                         buttonLabel = "Browse...",
+                         placeholder = "No file selected",
+                         capture = NULL),
+              tableOutput("contents"),
+              plotOutput("matrx")
+        ),
+      tabPanel("Rules", "Hello")
+              
+  )
+          
+          
 )
 
 server <- function(input, output) {
@@ -68,6 +75,9 @@ server <- function(input, output) {
             #generate R dataset view
         output$contents <- renderTable({
            file <- input$File_ch
+           
+          
+           
            ext  <- tools::file_ext(file$datapath)
            tab <- readRDS(file$datapath)
            tab
