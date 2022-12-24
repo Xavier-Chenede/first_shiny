@@ -9,6 +9,7 @@
 
 library(shiny)
 library(plot.matrix)
+library (here)
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(tabsetPanel(
@@ -44,19 +45,18 @@ ui <- fluidPage(tabsetPanel(
       tabPanel("Rules", "Hello")
               
   )
-          
-          
+
 )
 
 server <- function(input, output) {
         
-  
-        v <- reactiveValues(data = 0)
-            #clicks incrementation (+1)
-            observeEvent(input$but1, {
-                v$data<-v$data+1
-            })
-            
+        source(here::here("codes",'v.R'),local = TRUE ) #to replace following code
+        # v <- reactiveValues(data = 0)
+            # #clicks incrementation (+1)
+            # observeEvent(input$but1, {
+            #     v$data<-v$data+1
+            # })
+
             #clicks count, manual reset (=0)
             observeEvent(input$but2, {
                 v$data<-0
@@ -65,7 +65,7 @@ server <- function(input, output) {
             #clicks compare to autoreset
         click <- eventReactive(input$but1,{
             if (v$data==input$lim+1) {v$data<-0}
-        })
+        }) 
         
             #render results depending on current values
        output$result <- renderText({
@@ -75,8 +75,6 @@ server <- function(input, output) {
             #generate R dataset view
         output$contents <- renderTable({
            file <- input$File_ch
-           
-          
            
            ext  <- tools::file_ext(file$datapath)
            tab <- readRDS(file$datapath)
